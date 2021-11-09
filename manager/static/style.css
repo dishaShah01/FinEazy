@@ -1,0 +1,51 @@
+*{
+    font-family: "Raleway", sans-serif;
+  }
+body{
+    background-image: url('https://i.pinimg.com/originals/5a/31/34/5a3134e3a25a78714b7552ebedad6ea0.jpg'); background-repeat: no-repeat; background-size: cover; 
+    
+}
+  h1 {
+position: relative;
+padding: 0;
+margin: 0;
+font-weight: 300;
+font-size: 40px;
+color: #080808;
+-webkit-transition: all 0.4s ease 0s;
+-o-transition: all 0.4s ease 0s;
+transition: all 0.4s ease 0s;
+}
+  .heading h1 {
+text-align: center;
+text-transform: uppercase;
+padding-bottom: 5px;
+}
+.heading h1:before {
+width: 28px;
+height: 5px;
+display: block;
+content: "";
+position: absolute;
+bottom: 3px;
+left: 50%;
+margin-left: -14px;
+background-color: #b80000;
+}
+.heading h1:after {
+width: 100px;
+height: 1px;
+display: block;
+content: "";
+position: relative;
+margin-top: 25px;
+left: 50%;
+margin-left: -50px;
+background-color: #b80000;
+}
+.mybtn{
+    
+    border-width: 2px; 
+    border-color: brown; 
+    margin: 5%;
+}
