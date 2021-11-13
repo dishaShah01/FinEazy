@@ -1,2 +1,2 @@
 # FinEazy
-A Financial Portfolio Manager
+A Financial Portfolio Manager for Crypto
