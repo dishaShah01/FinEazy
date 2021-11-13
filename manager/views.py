@@ -17,7 +17,8 @@ from django.views.generic import (
     DetailView
 )
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-
+df = pd.read_csv("manager\digital_currency_list.csv")
+names = df.iloc[:,1].values
 # Create your views here.
 def home(request):
     # put_historical_data()
@@ -56,7 +57,16 @@ def registerUser(request):
 def dashboard(request):
     return render(request,'dashboard.html')
 
+def buy(request):
+    if request.method=='POST':
+        print(request.POST)
+        match=df[df['currency name']==request.POST.get('search')]
+        print(match)
+    return render(request,'buy.html')  
 
+def goal(request):
+    # put_historical_data()
+    return render(request,'goal.html')  
 
     
 

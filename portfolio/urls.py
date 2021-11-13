@@ -11,5 +11,7 @@ urlpatterns = [
     path('register/',registerUser,name='register'),
     path('',home,name='home'),
     path('admin/', admin.site.urls),
-    path('/dashboard',dashboard,name='dashboard')
+    path('/dashboard',dashboard,name='dashboard'),
+    path('/buy',buy,name='buy'),
+    path('/goal',goal,name='goal'),
 ]
