@@ -4,7 +4,7 @@ import plotly
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login,logout,authenticate
 import requests
-import pandas as pd
+import pandas as pdpip
 import numpy as np
 from .forms import *
 from django.contrib import messages
