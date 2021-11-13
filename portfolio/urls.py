@@ -11,4 +11,5 @@ urlpatterns = [
     path('register/',registerUser,name='register'),
     path('',home,name='home'),
     path('admin/', admin.site.urls),
+    path('/dashboard',dashboard,name='dashboard')
 ]
