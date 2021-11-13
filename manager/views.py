@@ -4,7 +4,7 @@ import plotly
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login,logout,authenticate
 import requests
-import pandas as pdpip
+import pandas as pd
 import numpy as np
 from .forms import *
 from django.contrib import messages
@@ -25,7 +25,7 @@ df = pd.read_csv("manager\digital_currency_list.csv")
 names = df.iloc[:,1].values
 # Create your views here.
 def home(request):
-    put_historical_data()
+    #put_historical_data()
     return render(request,'homepage.html')     
 
 def logoutUser(request):
@@ -63,9 +63,9 @@ def dashboard(request):
 
 def buy(request):
     if request.method=='POST':
-        print(request.POST)
+       
         match=df[df['currency name'] == request.POST.get('search')]
-        print(match)
+        
         coin_data = pd.read_csv(r"manager\crypto_data" + "\\" + match.iloc[0,0] + ".csv")
         fig = px.line(coin_data, x="Date", y=coin_data.columns[1:])
         graph = plotly.offline.plot(fig, auto_open=False, output_type="div")
@@ -97,6 +97,4 @@ def put_historical_data():
                 counter += 1
             df.to_csv(r"manager\crypto_data" + "\\" + code+ ".csv",index=False)
         except:
-            print(code)
-            print(data)
             pass

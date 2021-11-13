@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # 'manager',
     'manager.apps.ManagerConfig',
     'crispy_forms',
+    #'fontawesome-free',
 ]
 
 MIDDLEWARE = [
