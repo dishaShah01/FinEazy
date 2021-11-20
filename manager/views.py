@@ -67,7 +67,8 @@ def dashboard(request):
 
 
 def buy(request):
-    if request.method == 'POST':
+    search=request.POST.get('search')
+    if request.method == 'POST' and search is not None:
         match = df[df['currency name'] == request.POST.get('search')]
 
         coin_data = pd.read_csv(r"manager\crypto_data" + "\\" + match.iloc[0, 0] + ".csv")
@@ -75,6 +76,12 @@ def buy(request):
         graph = plotly.offline.plot(fig, auto_open=False, output_type="div")
         context = {"graph": graph}
         return render(request, 'buy.html', context)
+    else:
+        if request.method == 'POST':
+            amt= request.POST.get('buyform')
+
+            context = {"amt": amt}
+            return render(request, 'buyform.html', context)
     return render(request, 'buy.html')
 
 
@@ -102,3 +109,7 @@ def put_historical_data():
             df.to_csv(r"manager\crypto_data" + "\\" + code + ".csv", index=False)
         except:
             pass
+
+def buyform(request):
+    
+    return render(request, 'buyform.html')

@@ -13,5 +13,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('/dashboard',dashboard,name='dashboard'),
     path('/buy',buy,name='buy'),
+    path('/buyform',buyform,name='buyform'),
     path('/goal',goal,name='goal'),
 ]
