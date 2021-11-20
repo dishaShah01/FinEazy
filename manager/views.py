@@ -123,7 +123,8 @@ def put_historical_data():
 def buyform(request):
     print('Hello')
     if request.method == 'POST':
-        prior = Stocks.objects.get(name=name)
+        print(name)
+        prior = Stocks.objects.filter(name=name)
         print('Prior',prior)
         stock = Stocks(
             user = request.user,
@@ -133,4 +134,4 @@ def buyform(request):
             total_money_now = total_money
         )
         stock.save()
-    return render(request, 'buyform.html')
+    return render(request, 'dashboard.html')

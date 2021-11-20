@@ -122,10 +122,9 @@ padding-bottom: 10px;
       </div>
       <div class="card-footer d-flex justify-content-center">
         <a href='{% url "dashboard" %}'><button class="btn btn-outline-danger" style="border-width: 2px;" type="submit">Cancel</button></a>
-        <form method="POST" action="">
+        <form method="POST" action='{% url "buyform" %}'>
           {% csrf_token %}
-        <a href='{% url "buyform" %}' style="margin-left: 5%;"><input class="btn btn-outline" style="border-width: 2px; border-color: brown;" type="submit" value="Confirm"></a>
-
+        <a href= style="margin-left: 5%;"><input class="btn btn-outline" style="border-width: 2px; border-color: brown;" type="submit" value="Confirm"></a>
     </form> 
     </div>
     </div>
