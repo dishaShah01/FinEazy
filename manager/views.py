@@ -70,7 +70,7 @@ def dashboard(request):
 
 def buy(request):
     global coin_data
-    global name
+    global name, amt, total_coins, total_money
     search=request.POST.get('search')
     if request.method == 'POST' and search is not None:
         match = df[df['currency name'] == request.POST.get('search')]
@@ -121,5 +121,16 @@ def put_historical_data():
             pass
 
 def buyform(request):
-    
+    print('Hello')
+    if request.method == 'POST':
+        prior = Stocks.objects.get(name=name)
+        print('Prior',prior)
+        stock = Stocks(
+            user = request.user,
+            name = name,
+            total_coins_bought = total_coins,
+            total_money_invested = amt,
+            total_money_now = total_money
+        )
+        stock.save()
     return render(request, 'buyform.html')
