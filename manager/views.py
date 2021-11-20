@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from datetime import date
 from .models import *
 import plotly
 from django.contrib.auth.forms import UserCreationForm
@@ -67,10 +68,12 @@ def dashboard(request):
 
 
 def buy(request):
+    global coin_data
+    global name
     search=request.POST.get('search')
     if request.method == 'POST' and search is not None:
         match = df[df['currency name'] == request.POST.get('search')]
-
+        name = request.POST.get('search')
         coin_data = pd.read_csv(r"manager\crypto_data" + "\\" + match.iloc[0, 0] + ".csv")
         fig = px.line(coin_data, x="Date", y=coin_data.columns[1:])
         graph = plotly.offline.plot(fig, auto_open=False, output_type="div")
@@ -78,9 +81,15 @@ def buy(request):
         return render(request, 'buy.html', context)
     else:
         if request.method == 'POST':
-            amt= request.POST.get('buyform')
+            amt= int(request.POST.get('buyform'))
+            per_coin_price = coin_data.iloc[0,1]
+            print(coin_data)
+            print(per_coin_price)
+            total_coins = amt/per_coin_price
+            total_money = 100000
+            context = {"amt": amt,"total_coins":total_coins,"name": name,
+                       "date":date.today(),"total_money": total_money }
 
-            context = {"amt": amt}
             return render(request, 'buyform.html', context)
     return render(request, 'buy.html')
 
