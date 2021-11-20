@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>dashboard</title>
+    <title>confirmpurchase</title>
 <style>
 
   h3{
@@ -87,16 +87,43 @@ padding-bottom: 10px;
 
 
   <div class="container d-flex justify-content-center" style="margin-top: 5%;"> 
-    <div class="card" style="border-width: 2px; border-color: brown;">
-        
-        <div class="card-body">           
-         
-           amount= {{ amt }}
-           total = {{ total_coins }}
-      
+    <div class="card" style="border-width: 2px; border-color: brown; ">
+        <div class="card-header"><h1>Purchase Summary</h1></div>
+        <div class="card-body d-flex justify-content-center ">           
+            <table class="table-sm table-hover">
+
+                <tbody>
+                  <tr>
+                    <th scope="row">Date</th>
+                    <td>{{ date }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Currency</th>
+                    <td>{{ name }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Price per coin</th>
+                    <td>{{ pcp }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Number of coins</th>
+                    <td>{{ total_coins }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Amount due</th>
+                    <td>{{ amt }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Total money</th>
+                    <td>{{ total_money }}</td>
+                  </tr>
+                </tbody>
+              </table>      
       </div>
-      <div class="card-footer">
-        <input class="btn btn-outline" style="border-width: 2px; border-color: brown; margin: 5%;" type="submit" value="Submit">
+      <div class="card-footer d-flex justify-content-center">
+        <a href='{% url "dashboard" %}'><button class="btn btn-outline-danger" style="border-width: 2px;" type="submit">Cancel</button></a>
+        <a href="" style="margin-left: 5%;"><input class="btn btn-outline" style="border-width: 2px; border-color: brown;" type="submit" value="Confirm"></a>
+
     </form> 
     </div>
     </div>

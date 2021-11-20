@@ -11,6 +11,7 @@ from .forms import *
 from django.contrib import messages
 from .keys import ALPHAVANTAGE_API_KEY
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.views.generic import (
     ListView,
     CreateView,
@@ -85,10 +86,10 @@ def buy(request):
             per_coin_price = coin_data.iloc[0,1]
             print(coin_data)
             print(per_coin_price)
-            total_coins = amt/per_coin_price
+            total_coins = round(amt/per_coin_price)
             total_money = 100000
             context = {"amt": amt,"total_coins":total_coins,"name": name,
-                       "date":date.today(),"total_money": total_money }
+                       "date":date.today(),"total_money": total_money, "pcp":per_coin_price }
 
             return render(request, 'buyform.html', context)
     return render(request, 'buy.html')
