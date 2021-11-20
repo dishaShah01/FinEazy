@@ -26,7 +26,11 @@ df = pd.read_csv("manager\digital_currency_list.csv")
 names = df.iloc[:,1].values
 # Create your views here.
 def home(request):
+<<<<<<< HEAD
     # put_historical_data()
+=======
+    #put_historical_data()
+>>>>>>> 3687bd59ada934719fd350bb401e8c092570da55
     return render(request,'homepage.html')     
 
 def logoutUser(request):
@@ -64,9 +68,9 @@ def dashboard(request):
 
 def buy(request):
     if request.method=='POST':
-        print(request.POST)
+       
         match=df[df['currency name'] == request.POST.get('search')]
-        print(match)
+        
         coin_data = pd.read_csv(r"manager\crypto_data" + "\\" + match.iloc[0,0] + ".csv")
         fig = px.line(coin_data, x="Date", y=coin_data.columns[1:])
         graph = plotly.offline.plot(fig, auto_open=False, output_type="div")
@@ -98,7 +102,11 @@ def put_historical_data():
                 counter += 1
             df.to_csv(r"manager\crypto_data" + "\\" + code+ ".csv",index=False)
         except:
+<<<<<<< HEAD
             print(code)
             print(data)
             pass
         time.sleep(12)
+=======
+            pass
+>>>>>>> 3687bd59ada934719fd350bb401e8c092570da55
