@@ -1,10 +1,11 @@
 from django.shortcuts import render,redirect
+import time
 from .models import *
 import plotly
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login,logout,authenticate
 import requests
-import pandas as pdpip
+import pandas as pd
 import numpy as np
 from .forms import *
 from django.contrib import messages
@@ -25,7 +26,7 @@ df = pd.read_csv("manager\digital_currency_list.csv")
 names = df.iloc[:,1].values
 # Create your views here.
 def home(request):
-    put_historical_data()
+    # put_historical_data()
     return render(request,'homepage.html')     
 
 def logoutUser(request):
@@ -100,3 +101,4 @@ def put_historical_data():
             print(code)
             print(data)
             pass
+        time.sleep(12)
