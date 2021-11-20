@@ -48,7 +48,8 @@ def loginUser(request):
             if user is not None:
                 login(request, user)
                 return redirect('home')
-        return render(request, 'login.html')
+    messages.success(request, f'Login successful!')
+    return render(request, 'login.html')
 
 
 def registerUser(request):
@@ -65,7 +66,11 @@ def registerUser(request):
 
 
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    prior = Stocks.objects.filter(user=request.user)
+    context={
+        'stocks':prior,
+    }
+    return render(request, 'dashboard.html',context)
 
 
 def buy(request):
@@ -144,4 +149,15 @@ def buyform(request):
             )
             stock.save()
             print("Stock saved")
+            messages.success(request, f'Purchase successfull')
     return render(request, 'dashboard.html')
+
+def sell(request,name):
+    print(name)
+    match = df[df['currency name'] == name]
+
+    data = pd.read_csv(r"manager\crypto_data" + "\\" + match.iloc[0, 0] + ".csv")
+    fig = px.line(data, x="Date", y=data.columns[1:])
+    graph = plotly.offline.plot(fig, auto_open=False, output_type="div")
+    context = {"graph": graph}
+    return render(request, 'sell.html', context)
