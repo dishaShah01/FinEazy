@@ -124,14 +124,24 @@ def buyform(request):
     print('Hello')
     if request.method == 'POST':
         print(name)
-        prior = Stocks.objects.filter(name=name)
-        print('Prior',prior)
-        stock = Stocks(
-            user = request.user,
-            name = name,
-            total_coins_bought = total_coins,
-            total_money_invested = amt,
-            total_money_now = total_money
-        )
-        stock.save()
+        prior = Stocks.objects.filter(user=request.user).filter(name=name)
+        if len(prior) == 1:
+            for crypto in prior:
+                print('Prior',crypto.user,crypto.name,crypto.total_coins_bought)
+                crypto.total_coins_bought += total_coins
+                crypto.total_money_invested += amt
+                crypto.total_money_now -= amt
+                crypto.save()
+                print(crypto.user, crypto.name, crypto.total_coins_bought)
+        else:
+            stock = Stocks(
+                user = request.user,
+                name = name,
+                dob=date.today(),
+                total_coins_bought = total_coins,
+                total_money_invested = amt,
+                total_money_now = total_money
+            )
+            stock.save()
+            print("Stock saved")
     return render(request, 'dashboard.html')
