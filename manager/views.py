@@ -74,9 +74,11 @@ def buy(request):
         match = df[df['currency name'] == request.POST.get('search')]
         name = request.POST.get('search')
         coin_data = pd.read_csv(r"manager\crypto_data" + "\\" + match.iloc[0, 0] + ".csv")
-        fig = px.line(coin_data, x="Date", y=coin_data.columns[1:])
-        graph = plotly.offline.plot(fig, auto_open=False, output_type="div")
-        context = {"graph": graph}
+        fig = px.line(coin_data, x="Date", y=coin_data.columns[1:5], width=500, height=300)
+        graph1 = plotly.offline.plot(fig, auto_open=False, output_type="div")
+        fig = px.line(coin_data, x="Date", y=coin_data.columns[5:],width=500, height=300)
+        graph2 = plotly.offline.plot(fig, auto_open=False, output_type="div")
+        context = {"graph": [graph1,graph2]}
         return render(request, 'buy.html', context)
     else:
         if request.method == 'POST':
@@ -152,9 +154,11 @@ def sell(request,name):
     name_sell = name
     match = df[df['currency name'] == name]
     data = pd.read_csv(r"manager\crypto_data" + "\\" + match.iloc[0, 0] + ".csv")
-    fig = px.line(data, x="Date", y=data.columns[1:])
-    graph = plotly.offline.plot(fig, auto_open=False, output_type="div")
-    context = {"graph": graph}
+    fig = px.line(data, x="Date", y=data.columns[1:5],width=500, height=300)
+    graph1 = plotly.offline.plot(fig, auto_open=False, output_type="div")
+    fig = px.line(data, x="Date", y=data.columns[5:],width=500, height=300)
+    graph2 = plotly.offline.plot(fig, auto_open=False, output_type="div")
+    context = {"graph": [graph1,graph2]}
 
     if request.method == 'POST':
         total_coins_sell = int(request.POST.get('sellform'))
