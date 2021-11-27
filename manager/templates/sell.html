@@ -64,7 +64,13 @@ padding-bottom: 10px;
 </style>
   </head>
   <body>   
-
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li>{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
   <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <a class="navbar-brand">FinEazy</a>
     <button class="navbar-toggler" data-target="#my-nav" data-toggle="collapse" aria-controls="my-nav" aria-expanded="false" aria-label="Toggle navigation">
@@ -101,7 +107,7 @@ padding-bottom: 10px;
         <form class="form-group" action="" method="POST">
           {% csrf_token %}
         <input type="number" class="form-control" placeholder="Number of coins you want to sell" name="sellform"><br>
-        <a href=""><button type="submit" class="flex btn btn-outline" style="border-width: 2px; border-color: brown;" >Sell</button></a>
+        <a href="{% url 'sellform' %}"><button type="submit" class="flex btn btn-outline" style="border-width: 2px; border-color: brown;" >Sell</button></a>
 
       </form>
      </div>

@@ -147,11 +147,51 @@ def buyform(request):
     
 @login_required
 def sell(request,name):
+    global name_sell, total_coins_sell, per_coin_price_sell, amt_sell
     print(name)
+    name_sell = name
     match = df[df['currency name'] == name]
-
     data = pd.read_csv(r"manager\crypto_data" + "\\" + match.iloc[0, 0] + ".csv")
     fig = px.line(data, x="Date", y=data.columns[1:])
     graph = plotly.offline.plot(fig, auto_open=False, output_type="div")
     context = {"graph": graph}
+
+    if request.method == 'POST':
+        total_coins_sell = int(request.POST.get('sellform'))
+        prior = Stocks.objects.filter(user=request.user).get(name=name_sell)
+        if total_coins_sell > prior.total_coins_bought:
+            messages.info(request, 'Invalid number of coins. Please enter coins that you currently have !')
+            # We can show total coins user has here to improve UX
+            return render(request, 'sell.html')
+        per_coin_price_sell = data.iloc[0, 1]
+
+        amt_sell = round(total_coins_sell * per_coin_price_sell)
+        # total_money = 100000
+        context = {"amt": amt_sell, "total_coins": total_coins_sell, "name": name,
+                   "date": date.today(), "pcp": per_coin_price_sell}
+
+        return render(request, 'sellform.html', context)
+
     return render(request, 'sell.html', context)
+
+
+def sellform(request):
+    print('Hello sell')
+    if request.method == 'POST':
+        print(name_sell)
+        crypto = Stocks.objects.filter(user=request.user).get(name=name_sell)
+        if crypto.total_coins_bought - total_coins_sell == 0:
+            crypto.delete()
+        else:
+            print('Prior', crypto.user, crypto.name, crypto.total_coins_bought)
+            crypto.total_coins_bought -= total_coins_sell
+            crypto.total_money_invested -= amt_sell
+            crypto.total_money_now -= amt_sell
+            crypto.save()
+            print(crypto.user, crypto.name, crypto.total_coins_bought)
+            print("Stock sold")
+            messages.success(request, f'Sold successfully!')
+    return render(request, 'dashboard.html')
+
+
+
