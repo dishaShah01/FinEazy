@@ -36,13 +36,25 @@
       </ul>
     </div>
   </nav>
-  <form class="form-group" method="POST">
-{% csrf_token %}
-<label for="returns">Percentage Returns</label>
-    <input type="number" class="form-control" id="returns" placeholder="Percentage returns" name="returns">
-    <label for="time">Time period</label>
-    <input type="number" class="form-control" id="time" placeholder="Time in weeks" name="time"> 
-  </form>
+  <div class="container d-flex justify-content-center">
+    <div class="card" style="background-color: rgba(255, 255, 255, 0.384);">
+      <div class="card-header heading" style="background:transparent !important;">
+        <h1>Set an investment goal</h1>
+      </div>
+      <div class="card-body">
+        <form class="form-group" method="POST">
+          {% csrf_token %}
+          <label for="returns" style="color: rgb(19, 71, 105);">Percentage Returns</label>
+              <input type="number" class="form-control" id="returns" placeholder="Percentage returns" name="returns">
+              <br>
+              <label for="time" style="color: rgb(19, 71, 105);">Time period</label>
+              <input type="number" class="form-control" id="time" placeholder="Time in weeks" name="time">
+              <input class="btn btn-outline" style="border-width: 2px; border-color: brown; margin: 5%;" type="submit" value="Set">
+            </form>
+      </div>
+    </div>
+        </div>
+
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

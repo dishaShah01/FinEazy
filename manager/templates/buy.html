@@ -114,8 +114,9 @@ padding-bottom: 10px;
         <form class="form-group" action="" method="POST">
           {% csrf_token %}
         <input type="number" class="form-control" placeholder="Amount you want to invest" name="buyform">
+        <br>
         <a href="{% url 'buyform' %}"><button type="submit" class="flex btn btn-outline" style="border-width: 2px; border-color: brown;" >Buy</button></a>
-
+        
       </form>
      </div>
     </div>

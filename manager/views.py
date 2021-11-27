@@ -197,5 +197,5 @@ def sellform(request):
 def goal(request):
     if request.method=="POST":
         pass
-    
+    return render(request, 'goal.html')
 
