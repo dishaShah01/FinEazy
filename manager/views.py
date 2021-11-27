@@ -174,7 +174,7 @@ def sell(request,name):
 
     return render(request, 'sell.html', context)
 
-
+@login_required
 def sellform(request):
     print('Hello sell')
     if request.method == 'POST':
@@ -193,5 +193,9 @@ def sellform(request):
             messages.success(request, f'Sold successfully!')
     return render(request, 'dashboard.html')
 
-
+@login_required
+def goal(request):
+    if request.method=="POST":
+        pass
+    
 
