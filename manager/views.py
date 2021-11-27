@@ -12,13 +12,6 @@ from django.contrib import messages
 from .keys import ALPHAVANTAGE_API_KEY
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.views.generic import (
-    ListView,
-    CreateView,
-    UpdateView,
-    DeleteView,
-    DetailView
-)
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 import plotly.express as px
 
@@ -64,7 +57,7 @@ def registerUser(request):
         form = UserRegisterForm()
     return render(request, 'register.html', {'form': form})
 
-
+@login_required
 def dashboard(request):
     prior = Stocks.objects.filter(user=request.user)
     context={
@@ -72,7 +65,7 @@ def dashboard(request):
     }
     return render(request, 'dashboard.html',context)
 
-
+@login_required
 def buy(request):
     global coin_data
     global name, amt, total_coins, total_money
@@ -99,7 +92,7 @@ def buy(request):
             return render(request, 'buyform.html', context)
     return render(request, 'buy.html')
 
-
+@login_required
 def goal(request):
     # put_historical_data()
     return render(request, 'goal.html')
@@ -124,7 +117,7 @@ def put_historical_data():
             df.to_csv(r"manager\crypto_data" + "\\" + code + ".csv", index=False)
         except:
             pass
-
+@login_required
 def buyform(request):
     print('Hello')
     if request.method == 'POST':
@@ -151,7 +144,8 @@ def buyform(request):
             print("Stock saved")
             messages.success(request, f'Purchase successfull')
     return render(request, 'dashboard.html')
-
+    
+@login_required
 def sell(request,name):
     print(name)
     match = df[df['currency name'] == name]
