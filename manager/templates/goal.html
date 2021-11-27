@@ -45,10 +45,10 @@
         <form class="form-group" method="POST">
           {% csrf_token %}
           <label for="returns" style="color: rgb(19, 71, 105);">Percentage Returns</label>
-              <input type="number" class="form-control" id="returns" placeholder="Percentage returns" name="returns">
+              <input type="number" class="form-control" id="returns" placeholder="Percentage returns" name="returns" required>
               <br>
               <label for="time" style="color: rgb(19, 71, 105);">Time period</label>
-              <input type="number" class="form-control" id="time" placeholder="Time in weeks" name="time">
+              <input type="number" class="form-control" id="time" placeholder="Time in weeks" name="time" required>
               <input class="btn btn-outline" style="border-width: 2px; border-color: brown; margin: 5%;" type="submit" value="Set">
             </form>
       </div>

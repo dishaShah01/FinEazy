@@ -100,7 +100,7 @@ padding-bottom: 10px;
  {% if graph %}
   <div class="container d-flex justify-content-center" style="margin-top: 5%;"> 
     <div class="card" style="border-width: 2px; border-color: brown;">
-      <div class="card-body d-flex justify-content-center">   
+      <div class="card-body d-lg-inline-flex justify-content-center">   
         {% for g in graph %}  
         <div style="border-style:solid; border-color: black; border-width: 0.5px; margin: 0.5%;">{{ g|safe }}</div>
         {% endfor %}
@@ -108,7 +108,7 @@ padding-bottom: 10px;
       <div class="card-footer">
         <form class="form-group" action="" method="POST">
           {% csrf_token %}
-        <input type="number" class="form-control" placeholder="Number of coins you want to sell" name="sellform"><br>
+        <input type="number" class="form-control" placeholder="Number of coins you want to sell" name="sellform" required><br>
         <a href="{% url 'sellform' %}"><button type="submit" class="flex btn btn-outline" style="border-width: 2px; border-color: brown;" >Sell</button></a>
 
       </form>
