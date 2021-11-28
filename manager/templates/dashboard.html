@@ -51,10 +51,10 @@
     <a href="{% url 'sell' s.name %}" class="list-group-item list-group-item-action flex-column align-items-start">
       <div class="d-flex w-100 justify-content-between">
         <h5 class="mb-1">{{ s.name }}</h5>
-        <small>{{ s.dob }}</small>
+        <small>📆{{ s.dob }}</small>
       </div>
       <p class="mb-1">................................................................................................</p>
-      <small>Total coins: {{ s.total_coins_bought }}</small>
+      <small>💰Total coins: {{ s.total_coins_bought }}</small>
     </a>
     {% endfor %}
   </div>

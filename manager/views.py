@@ -13,9 +13,10 @@ from django.contrib import messages
 from .keys import ALPHAVANTAGE_API_KEY
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 import plotly.express as px
 import os
+from plotly.subplots import make_subplots
+import plotly.graph_objects as go
 
 df = pd.read_csv("manager\digital_currency_list.csv")
 names = df.iloc[:, 1].values
@@ -77,11 +78,18 @@ def buy(request):
             match = df[df['currency name'] == request.POST.get('search')]
             name = request.POST.get('search')
             coin_data = pd.read_csv(r"manager\crypto_data" + "\\" + match.iloc[0, 0] + ".csv")
-            fig = px.line(coin_data, x="Date", y=coin_data.columns[1:5], width=500, height=300)
+            #color_discrete_map = { 'Open': 'rgb(255,0,0)'}
+            fig = px.line(coin_data, x="Date", y=coin_data.columns[1:2], width=1050, height=500)
             graph1 = plotly.offline.plot(fig, auto_open=False, output_type="div")
-            fig = px.line(coin_data, x="Date", y=coin_data.columns[5:],width=500, height=300)
+            fig = px.line(coin_data, x="Date", y=coin_data.columns[5:],width=1050, height=500)
             graph2 = plotly.offline.plot(fig, auto_open=False, output_type="div")
-            context = {"graph": [graph1,graph2]}
+            fig = px.line(coin_data, x="Date", y=coin_data.columns[2:3],width=1050, height=500)
+            graph3 = plotly.offline.plot(fig, auto_open=False, output_type="div")
+            fig = px.line(coin_data, x="Date", y=coin_data.columns[3:4],width=1050, height=500)
+            graph4 = plotly.offline.plot(fig, auto_open=False, output_type="div")
+            fig = px.line(coin_data, x="Date", y=coin_data.columns[4:5],width=1050, height=500)
+            graph5 = plotly.offline.plot(fig, auto_open=False, output_type="div")
+            context = {"graph": [graph1,graph2,graph3,graph4,graph5]}
             return render(request, 'buy.html', context)
         except:
             context = {"err": "Currency not found!"}
