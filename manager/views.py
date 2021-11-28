@@ -226,7 +226,7 @@ def goal(request):
                 current=t.iloc[0,1]
                 if ((current-m)/m)*100>=returns:
                     l.append(df[df['currency code']==i[:-4]]['currency name'].values[0])
-        context={'stocks':l[:10]}
+        context={'stocks':[x for x in l if " " not in x]}
         print(context)
         return render(request,'list.html',context)
     return render(request, 'goal.html')
