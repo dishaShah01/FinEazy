@@ -174,11 +174,18 @@ def sell(request,name):
     name_sell = name
     match = df[df['currency name'] == name]
     data = pd.read_csv(r"manager\crypto_data" + "\\" + match.iloc[0, 0] + ".csv")
-    fig = px.line(data, x="Date", y=data.columns[1:5],width=500, height=300)
+    fig = px.line(coin_data, x="Date", y=coin_data.columns[1:2], width=1050, height=500)
     graph1 = plotly.offline.plot(fig, auto_open=False, output_type="div")
-    fig = px.line(data, x="Date", y=data.columns[5:],width=500, height=300)
+    fig = px.line(coin_data, x="Date", y=coin_data.columns[5:],width=1050, height=500)
     graph2 = plotly.offline.plot(fig, auto_open=False, output_type="div")
-    context = {"graph": [graph1,graph2]}
+    fig = px.line(coin_data, x="Date", y=coin_data.columns[2:3],width=1050, height=500)
+    graph3 = plotly.offline.plot(fig, auto_open=False, output_type="div")
+    fig = px.line(coin_data, x="Date", y=coin_data.columns[3:4],width=1050, height=500)
+    graph4 = plotly.offline.plot(fig, auto_open=False, output_type="div")
+    fig = px.line(coin_data, x="Date", y=coin_data.columns[4:5],width=1050, height=500)
+    graph5 = plotly.offline.plot(fig, auto_open=False, output_type="div")
+    context = {"graph": [graph1,graph2,graph3,graph4,graph5]}
+    
 
     if request.method == 'POST':
         total_coins_sell = int(request.POST.get('sellform'))
@@ -215,7 +222,11 @@ def sellform(request):
             print(crypto.user, crypto.name, crypto.total_coins_bought)
             print("Stock sold")
             messages.success(request, f'Sold successfully!')
-    return render(request, 'dashboard.html')
+    prior = Stocks.objects.filter(user=request.user)
+    context={
+        'stocks':prior,
+    }
+    return render(request, 'dashboard.html',context)
 
 @login_required
 def goal(request):
