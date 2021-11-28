@@ -255,9 +255,9 @@ def goalbuy(request,name1):
     global amt, total_coins, total_money
 
     global name
-    search=name1
+    search=request.POST.get('search')
     name=name1
-    if request.method == 'POST':
+    if request.method == 'POST' and search is None:
         match = df[df['currency name'] == name1]
         print(match,name1)        
         coin_data = pd.read_csv(r"manager\crypto_data" + "\\" + match.iloc[0, 0] + ".csv")
@@ -272,19 +272,27 @@ def goalbuy(request,name1):
                     "date":date.today(),"total_money": total_money, "pcp":per_coin_price }
         print("babaaaaaaaaaa")
         return render(request, 'buyform.html', context)
-    else:
-        
-        match = df[df['currency name'] == name1]
-        print(match,name1)        
-        coin_data = pd.read_csv(r"manager\crypto_data" + "\\" + match.iloc[0, 0] + ".csv")
-        fig = px.line(coin_data, x="Date", y=coin_data.columns[1:5], width=500, height=300)
-        graph1 = plotly.offline.plot(fig, auto_open=False, output_type="div")
-        fig = px.line(coin_data, x="Date", y=coin_data.columns[5:],width=500, height=300)
-        graph2 = plotly.offline.plot(fig, auto_open=False, output_type="div")
-        context = {"graph": [graph1,graph2]}
-        print("graph")
+    else: 
+        if search is None:
+            search=name1
+        try:
+            match = df[df['currency name'] == search]
+            print(match,search)        
+            coin_data = pd.read_csv(r"manager\crypto_data" + "\\" + match.iloc[0, 0] + ".csv")
+            match = df[df['currency name'] == request.POST.get('search')]
+            fig = px.line(coin_data, x="Date", y=coin_data.columns[1:2], width=1050, height=500)
+            graph1 = plotly.offline.plot(fig, auto_open=False, output_type="div")
+            fig = px.line(coin_data, x="Date", y=coin_data.columns[5:],width=1050, height=500)
+            graph2 = plotly.offline.plot(fig, auto_open=False, output_type="div")
+            fig = px.line(coin_data, x="Date", y=coin_data.columns[2:3],width=1050, height=500)
+            graph3 = plotly.offline.plot(fig, auto_open=False, output_type="div")
+            fig = px.line(coin_data, x="Date", y=coin_data.columns[3:4],width=1050, height=500)
+            graph4 = plotly.offline.plot(fig, auto_open=False, output_type="div")
+            fig = px.line(coin_data, x="Date", y=coin_data.columns[4:5],width=1050, height=500)
+            graph5 = plotly.offline.plot(fig, auto_open=False, output_type="div")
+            context = {"graph": [graph1,graph2,graph3,graph4,graph5]}
+        except:
+            context = {"err": "Currency not found!"}
         return render(request, 'buy.html', context)
 
-
-    return render(request, 'dashboard.html')
 

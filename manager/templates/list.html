@@ -20,7 +20,7 @@
     </div>
   </div>
   {% endfor %}
-  <div class="container justify-content-center" style="margin-top: 10%;">
+  <div class="container d-flex justify-content-center" style="margin-top: 10%;">
   <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
     <a class="navbar-brand">FinEazy</a>
     <button class="navbar-toggler" data-target="#my-nav" data-toggle="collapse" aria-controls="my-nav" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,9 +51,9 @@
     <a href="{% url 'goalbuy' s %}" class="list-group-item list-group-item-action flex-column align-items-start">
         <div class="d-flex w-100 justify-content-between">
             <h5 class="mb-1">{{ s }}💰</h5>
-            <small class="badge rounded-pill bg-light" style="color: black;">   #{{ forloop.counter }}   </small>
+            <small class="badge rounded-pill bg-dark" style="color: white; font-size:medium;">#{{ forloop.counter }}</small>
           </div>
-          <p class="mb-1"></p>
+          <p class="mb-1">___________________________________________________________________________</p>
           <small>🛒Proceed to buy</small>
     </a>
     {% endfor %}
