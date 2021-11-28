@@ -71,15 +71,19 @@ def buy(request):
     global name, amt, total_coins, total_money
     search=request.POST.get('search')
     if request.method == 'POST' and search is not None:
-        match = df[df['currency name'] == request.POST.get('search')]
-        name = request.POST.get('search')
-        coin_data = pd.read_csv(r"manager\crypto_data" + "\\" + match.iloc[0, 0] + ".csv")
-        fig = px.line(coin_data, x="Date", y=coin_data.columns[1:5], width=500, height=300)
-        graph1 = plotly.offline.plot(fig, auto_open=False, output_type="div")
-        fig = px.line(coin_data, x="Date", y=coin_data.columns[5:],width=500, height=300)
-        graph2 = plotly.offline.plot(fig, auto_open=False, output_type="div")
-        context = {"graph": [graph1,graph2]}
-        return render(request, 'buy.html', context)
+        try:
+            match = df[df['currency name'] == request.POST.get('search')]
+            name = request.POST.get('search')
+            coin_data = pd.read_csv(r"manager\crypto_data" + "\\" + match.iloc[0, 0] + ".csv")
+            fig = px.line(coin_data, x="Date", y=coin_data.columns[1:5], width=500, height=300)
+            graph1 = plotly.offline.plot(fig, auto_open=False, output_type="div")
+            fig = px.line(coin_data, x="Date", y=coin_data.columns[5:],width=500, height=300)
+            graph2 = plotly.offline.plot(fig, auto_open=False, output_type="div")
+            context = {"graph": [graph1,graph2]}
+            return render(request, 'buy.html', context)
+        except:
+            context = {"err": "Currency not found!"}
+            return render(request, 'buy.html', context)
     else:
         if request.method == 'POST':
             amt= int(request.POST.get('buyform'))
@@ -121,7 +125,7 @@ def put_historical_data():
             pass
 @login_required
 def buyform(request):
-    print('Hello')
+    
     if request.method == 'POST':
         print(name)
         prior = Stocks.objects.filter(user=request.user).filter(name=name)
