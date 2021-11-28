@@ -215,8 +215,6 @@ def goal(request):
         returns = int(request.POST.get('returns'))
         tp = int(request.POST.get('time'))
         print(date.today())
-        temp= pd.read_csv(r'C:\Users\user\FinEazy\manager\crypto_data\AAVE.csv')
-        print(type(temp.iloc[0,0]))
         six_months = str(date.today() + relativedelta(weeks=-tp))
         print(six_months)
         l=[]
@@ -228,7 +226,8 @@ def goal(request):
                 current=t.iloc[0,1]
                 if ((current-m)/m)*100>=returns:
                     l.append(df[df['currency code']==i[:-4]]['currency name'].values[0])
-        context={'stocks':l}
+        context={'stocks':l[:10]}
+        print(context)
         return render(request,'list.html',context)
     return render(request, 'goal.html')
 
