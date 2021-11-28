@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from datetime import date
+from dateutil.relativedelta import relativedelta
 from .models import *
 import plotly
 from django.contrib.auth.forms import UserCreationForm
@@ -14,6 +15,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 import plotly.express as px
+import os
 
 df = pd.read_csv("manager\digital_currency_list.csv")
 names = df.iloc[:, 1].values
@@ -135,8 +137,9 @@ def buyform(request):
                 crypto.total_coins_bought += total_coins
                 crypto.total_money_invested += amt
                 crypto.total_money_now -= amt
-                crypto.save()
                 print(crypto.user, crypto.name, crypto.total_coins_bought)
+                crypto.save()
+                
         else:
             stock = Stocks(
                 user = request.user,
@@ -149,7 +152,12 @@ def buyform(request):
             stock.save()
             print("Stock saved")
             messages.success(request, f'Purchase successfull')
-    return render(request, 'dashboard.html')
+    prior = Stocks.objects.filter(user=request.user)
+    context={
+        'stocks':prior,
+    }
+    return render(request, 'dashboard.html',context)
+
     
 @login_required
 def sell(request,name):
@@ -204,6 +212,61 @@ def sellform(request):
 @login_required
 def goal(request):
     if request.method=="POST":
-        pass
+        returns = int(request.POST.get('returns'))
+        tp = int(request.POST.get('time'))
+        print(date.today())
+        temp= pd.read_csv(r'C:\Users\user\FinEazy\manager\crypto_data\AAVE.csv')
+        print(type(temp.iloc[0,0]))
+        six_months = str(date.today() + relativedelta(weeks=-tp))
+        print(six_months)
+        l=[]
+        for i in os.listdir(r"manager\crypto_data"):
+            t=pd.read_csv(r"manager\crypto_data" + "\\" + i)
+            if len(t[t.Date==six_months].Open.values)>0:
+                m=t[t.Date==six_months].Open.values[0]
+                print(m)
+                current=t.iloc[0,1]
+                if ((current-m)/m)*100>=returns:
+                    l.append(df[df['currency code']==i[:-4]]['currency name'].values[0])
+        context={'stocks':l}
+        return render(request,'list.html',context)
     return render(request, 'goal.html')
+
+@login_required
+def goalbuy(request,name1):
+    global amt, total_coins, total_money
+
+    global name
+    search=name1
+    name=name1
+    if request.method == 'POST':
+        match = df[df['currency name'] == name1]
+        print(match,name1)        
+        coin_data = pd.read_csv(r"manager\crypto_data" + "\\" + match.iloc[0, 0] + ".csv")
+    
+        amt= int(request.POST.get('buyform'))
+        per_coin_price = coin_data.iloc[0,1]
+        print(coin_data)
+        print(per_coin_price)
+        total_coins = round(amt/per_coin_price)
+        total_money = 100000
+        context = {"amt": amt,"total_coins":total_coins,"name": name1,
+                    "date":date.today(),"total_money": total_money, "pcp":per_coin_price }
+        print("babaaaaaaaaaa")
+        return render(request, 'buyform.html', context)
+    else:
+        
+        match = df[df['currency name'] == name1]
+        print(match,name1)        
+        coin_data = pd.read_csv(r"manager\crypto_data" + "\\" + match.iloc[0, 0] + ".csv")
+        fig = px.line(coin_data, x="Date", y=coin_data.columns[1:5], width=500, height=300)
+        graph1 = plotly.offline.plot(fig, auto_open=False, output_type="div")
+        fig = px.line(coin_data, x="Date", y=coin_data.columns[5:],width=500, height=300)
+        graph2 = plotly.offline.plot(fig, auto_open=False, output_type="div")
+        context = {"graph": [graph1,graph2]}
+        print("graph")
+        return render(request, 'buy.html', context)
+
+
+    return render(request, 'dashboard.html')
 

@@ -15,6 +15,7 @@ urlpatterns = [
     path('/buy',buy,name='buy'),
     path('/buyform',buyform,name='buyform'),
     path('/goal',goal,name='goal'),
+    path('goalbuy/<slug:name1>',goalbuy,name='goalbuy'),
     path('crypto/<slug:name>',sell,name='sell'),
     path('/sellform',sellform,name='sellform'),
 ]
