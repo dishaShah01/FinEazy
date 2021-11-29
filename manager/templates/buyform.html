@@ -84,7 +84,7 @@ padding-bottom: 10px;
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'logout' %}" tabindex="-3" aria-disabled="true" style="color: brown;"><b>Logout</b></a>
+          <a class="nav-link" href="{% url 'logout' %}" tabindex="-3" aria-disabled="true" style="color: midnightblue;"><b>Logout</b></a>
         </li>
       </ul>
     </div>
@@ -92,7 +92,7 @@ padding-bottom: 10px;
 
 
   <div class="container d-flex justify-content-center" style="margin-top: 5%;"> 
-    <div class="card" style="border-width: 2px; border-color: brown; ">
+    <div class="card" style="border-width: 2px; border-color: midnightblue; ">
         <div class="card-header"><h1>Purchase Summary</h1></div>
         <div class="card-body d-flex justify-content-center ">           
             <table class="table-sm table-hover">
@@ -129,7 +129,7 @@ padding-bottom: 10px;
         <a href='{% url "dashboard" %}' class="mr-auto"><button class="btn btn-outline-danger" style="border-width: 2px;" type="submit">Cancel</button></a>
         <form method="POST" action='{% url "buyform" %}' class="ml-auto">
           {% csrf_token %}
-        <a href=""><input class="btn btn-outline-info" style="border-width: 2px; border-color: brown;" type="submit" value="Confirm"></a>
+        <a href=""><input class="btn btn-outline-info" style="border-width: 2px; border-color: midnightblue;" type="submit" value="Confirm"></a>
     </form> 
     </div>
     </div>

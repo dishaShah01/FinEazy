@@ -90,7 +90,7 @@ padding-bottom: 10px;
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'logout' %}" tabindex="-3" aria-disabled="true" style="color: brown;"><b>Logout</b></a>
+          <a class="nav-link" href="{% url 'logout' %}" tabindex="-3" aria-disabled="true" style="color: midnightblue;"><b>Logout</b></a>
         </li>
       </ul>
     </div>
@@ -99,7 +99,7 @@ padding-bottom: 10px;
  <br>
  {% if graph %}
   <div class="container d-flex justify-content-center" style="margin-top: 5%;"> 
-    <div class="card" style="border-width: 2px; border-color: brown;">
+    <div class="card" style="border-width: 2px; border-color: midnightblue;">
       <div class="card-body justify-content-center">   
         {% for g in graph %}  
         <div style="margin: 0.5%; float:left">{{ g|safe }}</div>
@@ -109,7 +109,7 @@ padding-bottom: 10px;
         <form class="form-group" action="" method="POST">
           {% csrf_token %}
         <input type="number" class="form-control" placeholder="Number of coins you want to sell" name="sellform" required><br>
-        <a href="{% url 'sellform' %}"><button type="submit" class="flex btn btn-outline" style="border-width: 2px; border-color: brown;" >Sell</button></a>
+        <a href="{% url 'sellform' %}"><button type="submit" class="flex btn btn-outline" style="border-width: 2px; border-color: midnightblue;" >Sell</button></a>
 
       </form>
      </div>
